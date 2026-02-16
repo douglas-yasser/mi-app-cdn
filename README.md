@@ -1,16 +1,119 @@
-# React + Vite
+# 🚀 Assignment 02 -- Web App Deployment using AWS CDN
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 📌 Descripción del Proyecto
 
-Currently, two official plugins are available:
+Esta es una aplicación web estática desarrollada como parte del curso de
+Cloud Computing. El objetivo fue desplegar la aplicación utilizando un
+CDN en AWS, automatizando el proceso mediante CI/CD.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+La aplicación fue desarrollada con React y Vite, y es desplegada
+automáticamente en AWS S3 y distribuida mediante CloudFront.
 
-## React Compiler
+------------------------------------------------------------------------
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🛠️ Tecnologías Utilizadas
 
-## Expanding the ESLint configuration
+-   React
+-   Vite
+-   Amazon S3
+-   Amazon CloudFront (CDN)
+-   Doppler (Gestión de secretos)
+-   GitHub Actions (CI/CD)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+------------------------------------------------------------------------
+
+## 🏗️ Arquitectura del Proyecto
+
+Flujo de despliegue:
+
+Developer → GitHub → GitHub Actions → Build → S3 → CloudFront → Usuario
+Final
+
+### Descripción del flujo:
+
+1.  El desarrollador realiza cambios y hace push a la rama
+    `assignment-02`.
+2.  GitHub Actions ejecuta el pipeline automáticamente.
+3.  Se ejecuta el build del proyecto generando la carpeta `dist/`.
+4.  El contenido de `dist/` se sube al bucket de Amazon S3.
+5.  Se invalida la caché de CloudFront.
+6.  Los usuarios acceden a la aplicación a través del CDN.
+
+------------------------------------------------------------------------
+
+## 🔄 Pipeline de GitHub Actions
+
+El pipeline realiza automáticamente:
+
+-   ✅ Build del proyecto con Vite
+-   ✅ Upload del contenido `dist/` al bucket S3
+-   ✅ Invalidation del CDN de CloudFront
+
+Ubicación del pipeline:
+
+.github/workflows/deploy.yml
+
+------------------------------------------------------------------------
+
+## 🔐 Gestión de Secretos con Doppler
+
+Las credenciales necesarias para el despliegue fueron almacenadas en un
+proyecto de Doppler específico para esta actividad.
+
+Doppler se encuentra integrado con el repositorio de GitHub mediante
+Config Sync, lo que permite actualizar automáticamente los secretos en
+GitHub Actions.
+
+Secrets utilizados:
+
+-   AWS_ACCESS_KEY_ID
+-   AWS_SECRET_ACCESS_KEY
+-   AWS_REGION
+-   S3_BUCKET_NAME
+
+------------------------------------------------------------------------
+
+## 🌐 URL Pública del CDN
+
+🔗 URL de acceso público mediante CloudFront:
+
+\[http://douglas-assignment-02-2026.s3-website.us-east-2.amazonaws.com\]
+
+------------------------------------------------------------------------
+
+## 📸 Evidencias
+
+### 1️⃣ Config Sync en Doppler
+
+(![alt text](<Screenshot 2026-02-15 233047.png>))
+
+### 2️⃣ Variables configuradas en Doppler
+
+(![alt text](<Screenshot 2026-02-15 231144.png>))
+
+### 3️⃣ Secrets en GitHub
+
+(![alt text](<Screenshot 2026-02-15 233014.png>))
+
+### 4️⃣ Aplicación funcionando
+
+(![alt text](image.png))
+
+------------------------------------------------------------------------
+
+## 📊 Cumplimiento de Requisitos
+
+✔ Proyecto configurado con Vite\
+✔ Generación de carpeta `dist/`\
+✔ Pipeline automatizado en GitHub Actions\
+✔ Secrets gestionados con Doppler\
+✔ CDN funcional mediante CloudFront\
+✔ Múltiples commits en la rama `assignment-02`
+
+------------------------------------------------------------------------
+
+## 👨‍💻 Autor
+
+Douglas Yasser\
+Curso de arquitectura de sistemas II\
+Assignment 02
