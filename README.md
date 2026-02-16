@@ -77,7 +77,7 @@ Secrets utilizados:
 
 🔗 URL de acceso público mediante CloudFront:
 
-\[http://douglas-assignment-02-2026.s3-website.us-east-2.amazonaws.com\]
+http://douglas-assignment-02-2026.s3-website.us-east-2.amazonaws.com
 
 ------------------------------------------------------------------------
 
@@ -97,7 +97,7 @@ Secrets utilizados:
 
 ### 4️⃣ Aplicación funcionando
 
-(![alt text](image.png))
+![alt text](image.png)
 
 ------------------------------------------------------------------------
 
