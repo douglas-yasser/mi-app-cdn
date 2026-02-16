@@ -1,43 +1,52 @@
+* {
+  box-sizing: border-box;
+}
+
 .App {
   min-height: 100vh;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 1rem;
 }
 
 .App-header {
   text-align: center;
   color: white;
-  padding: 2rem;
-  max-width: 800px;
+  width: 100%;
+  max-width: 900px;
+  padding: 1.5rem;
 }
 
 h1 {
-  font-size: 3rem;
+  font-size: 2rem;
   margin-bottom: 1rem;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-.card {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border-radius: 15px;
-  padding: 2rem;
-  margin: 2rem 0;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+.card,
+.info-section {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
 }
 
 button {
   background: #ff6b6b;
   color: white;
   border: none;
-  padding: 1rem 2rem;
-  font-size: 1.2rem;
+  padding: 0.9rem 1.5rem;
+  font-size: 1rem;
   border-radius: 50px;
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+  width: 100%;
+  max-width: 300px;
 }
 
 button:hover {
@@ -46,29 +55,40 @@ button:hover {
   box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
 }
 
-.info-section {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border-radius: 15px;
-  padding: 2rem;
-  margin: 2rem 0;
-}
-
 .info-section ul {
   list-style: none;
   padding: 0;
+  margin: 1rem 0 0 0;
 }
 
 .info-section li {
-  font-size: 1.1rem;
+  font-size: 1rem;
   margin: 0.5rem 0;
-  padding: 0.5rem;
-  background: rgba(255, 255, 255, 0.1);
+  padding: 0.6rem;
+  background: rgba(255, 255, 255, 0.15);
   border-radius: 8px;
 }
 
 footer {
   margin-top: 2rem;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   opacity: 0.8;
 }
+
+/* 🔥 RESPONSIVE PARA TABLET Y DESKTOP */
+@media (min-width: 768px) {
+  h1 {
+    font-size: 3rem;
+  }
+
+  button {
+    font-size: 1.2rem;
+  }
+
+  .card,
+  .info-section {
+    padding: 2rem;
+  }
+}
+
+
