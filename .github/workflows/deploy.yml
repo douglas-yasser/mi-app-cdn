@@ -24,7 +24,12 @@ jobs:
       - name: Build project
         run: npm run build
 
-      # 👇 NUEVO PASO IMPORTANTE
+      - name: Install AWS CLI
+        run: |
+          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+          unzip awscliv2.zip
+          sudo ./aws/install
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
