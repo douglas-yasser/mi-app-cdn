@@ -1,15 +1,15 @@
-import { useState } from 'react'
-import './App.css'
+import { useState } from 'react';
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   return (
     <div className="App">
       <header className="App-header">
         <h1>🚀 Mi Aplicación Web en AWS CDN</h1>
         <p>Proyecto de Cloud Computing - Assignment 02</p>
-        
+
         <div className="card">
           <button onClick={() => setCount((count) => count + 1)}>
             Contador: {count} clicks
@@ -30,12 +30,12 @@ function App() {
         </div>
 
         <footer>
-          <p>Creado por: [Tu Nombre]</p>
+          <p>Creado por: [Douglas Jacobo]</p>
           <p>Fecha: {new Date().toLocaleDateString()}</p>
         </footer>
       </header>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
