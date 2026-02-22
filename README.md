@@ -15,10 +15,7 @@ Aplicación web estática construida con **React + Vite**, dockerizada y despleg
 
 ## 🖥️ Captura de la Aplicación
 
-> _Agregar aquí captura de pantalla de la aplicación corriendo en el navegador_
-
-![Aplicación desplegada](./Screenshot%202026-02-15%20231144.png)
-
+![Aplicacion despleguada](image-2.png)
 **URL de producción:**  
 🌐 [http://mi-app-cdn-env.eba-vqzw3mrf.us-east-1.elasticbeanstalk.com](http://mi-app-cdn-env.eba-vqzw3mrf.us-east-1.elasticbeanstalk.com)
 
@@ -174,7 +171,9 @@ Total duration: 1m 48s
 
 ### Capturas de pantalla
 
-> _Agregar aquí capturas de la consola de AWS Elastic Beanstalk mostrando el entorno activo_
+![Activo](<Screenshot 2026-02-22 032441.png>)
+
+![Eventos](image.png)
 
 ---
 
