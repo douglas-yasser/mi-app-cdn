@@ -57,7 +57,7 @@ jobs:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           application_name: mi-app-cdn
-          environment_name: mi-app-cdn-env
+          environment_name: Mi-app-cdn-env
           version_label: ${{ github.sha }}
           region: us-east-1
           deployment_package: Dockerrun.aws.json
