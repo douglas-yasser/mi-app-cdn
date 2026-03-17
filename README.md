@@ -70,7 +70,9 @@ exports.up = function(knex) {
 
 ### Captura de pantalla — Base de datos en Railway
 
-![Base de datos](./docs/db-screenshot.png)
+![Base de datos, vacio](./docs/db-screenshot.png)
+
+![Base de datos, con datos ingresados](./docs/image.png)
 
 ---
 
