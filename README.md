@@ -9,7 +9,7 @@ Aplicación web full stack de gestión de tareas (To-Do List), desarrollada como
 | Servicio | URL |
 |---|---|
 | **Frontend** | https://monorepo-five-beta.vercel.app |
-| **Backend** | https://mi-app-cdn-production.up.railway.app |
+| **Backend** |  https://mi-app-cdn-production.up.railway.app/health |
 | **API Docs** | https://mi-app-cdn-production.up.railway.app/api-docs |
 
 ---
