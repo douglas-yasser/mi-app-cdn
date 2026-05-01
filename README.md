@@ -1,201 +1,105 @@
-# 📡 GraphQL API — Actividad Universitaria
+@"
+# Assignment 08 — Kubernetes con Minikube
 
-![Node.js](https://img.shields.io/badge/Node.js-22.x-339933?style=flat-square&logo=node.js&logoColor=white)
-![GraphQL](https://img.shields.io/badge/GraphQL-E10098?style=flat-square&logo=graphql&logoColor=white)
-![Express](https://img.shields.io/badge/Express-000000?style=flat-square&logo=express&logoColor=white)
-![License](https://img.shields.io/badge/License-ISC-blue?style=flat-square)
-![Status](https://img.shields.io/badge/Status-Live-brightgreen?style=flat-square)
+Clúster de Kubernetes local usando Minikube con Traefik, ArgoCD y la aplicación To-Do del assignment anterior.
 
-API GraphQL pública construida con Node.js + Express + sql.js, desplegada en Render. Permite consultar datos de **libros** y **estudiantes** solicitando únicamente los campos necesarios en cada query.
+## 📸 Capturas de pantalla
 
----
+### Aplicación To-Do
+![App](./docs/app-screenshot.png)
 
-## 🌐 Endpoint Público
+### ArgoCD
+![ArgoCD](./docs/argo-screenshot.png)
 
-```
-https://mi-app-cdn.onrender.com/graphql
-```
+![ArgoCD](./docs/argo2-screenshot.png)
+## Dominios configurados
 
-> ⚠️ El servicio usa el plan gratuito de Render. La primera request tras un período de inactividad puede tardar ~30 segundos en responder.
-
-**Documentación interactiva:**
-```
-https://mi-app-cdn.onrender.com
-```
-
----
-
-## 🗂️ Modelos Disponibles
-
-### 📚 Book (Libro)
-
-| Campo | Tipo | Descripción |
-|---|---|---|
-| `id` | `Int!` | Identificador único autoincremental |
-| `title` | `String!` | Título del libro |
-| `author` | `String!` | Nombre del autor |
-| `genre` | `String!` | Género literario |
-| `year` | `Int!` | Año de publicación |
-| `pages` | `Int!` | Número de páginas |
-| `rating` | `Float!` | Calificación promedio (0.0 – 5.0) |
-| `available` | `Boolean!` | Disponible en biblioteca |
-| `isbn` | `String!` | Código ISBN |
-| `language` | `String!` | Idioma original |
-
-### 🎓 Student (Estudiante)
-
-| Campo | Tipo | Descripción |
-|---|---|---|
-| `id` | `Int!` | Identificador único autoincremental |
-| `name` | `String!` | Nombre completo |
-| `email` | `String!` | Correo institucional |
-| `career` | `String!` | Carrera universitaria |
-| `semester` | `Int!` | Semestre actual (1–10) |
-| `gpa` | `Float!` | Promedio académico (0.0 – 4.0) |
-| `nationality` | `String!` | País de origen |
-| `enrolled` | `Boolean!` | Inscrito en el ciclo actual |
-| `scholarship` | `Boolean!` | Tiene beca activa |
-| `graduationYear` | `Int!` | Año proyectado de graduación |
-
----
-
-## 🔍 Queries Disponibles
-
-| Query | Descripción |
+| Servicio | URL |
 |---|---|
-| `books` | Lista completa de libros |
-| `book(id: Int!)` | Libro por ID |
-| `booksByGenre(genre: String!)` | Libros filtrados por género |
-| `booksByAuthor(author: String!)` | Libros filtrados por autor |
-| `students` | Lista completa de estudiantes |
-| `student(id: Int!)` | Estudiante por ID |
-| `studentsByCareer(career: String!)` | Estudiantes por carrera |
-| `studentsBySemester(semester: Int!)` | Estudiantes por semestre |
+| **Frontend** | http://app.douglas-yasser.com |
+| **Backend API** | http://api.douglas-yasser.com |
+| **ArgoCD** | http://argo.douglas-yasser.com |
 
-## ✏️ Mutations Disponibles
+## DNS Local configurado en /etc/hosts
 
-| Mutation | Descripción |
-|---|---|
-| `createBook(...)` | Crea un nuevo libro |
-| `createStudent(...)` | Crea un nuevo estudiante |
+\`\`\`
+127.0.0.1 app.douglas-yasser.com
+127.0.0.1 api.douglas-yasser.com
+127.0.0.1 argo.douglas-yasser.com
+\`\`\`
 
----
+##  Arquitectura
 
-## 💡 Ejemplos de Uso
+- **Minikube** — Clúster local de Kubernetes con driver Docker
+- **Traefik** — Ingress Controller instalado via Helm
+- **ArgoCD** — GitOps Controller
+- **Todo App** — Frontend (React + Nginx) y Backend (Node.js + Express)
 
-### Solo los campos que necesitas (el poder de GraphQL)
+## 📁 Manifiestos YAML (IaC)
 
-```graphql
-query {
-  books {
-    title
-    author
-    rating
-  }
-}
-```
+\`\`\`
+k8s/
+├── traefik/
+│   └── traefik.yaml
+├── argocd/
+│   └── ingressroute.yaml
+└── app/
+    ├── namespace.yaml
+    ├── backend-deployment.yaml
+    ├── frontend-deployment.yaml
+    └── ingressroute.yaml
+\`\`\`
 
-### Buscar libro por ID
+## ⚙️ Comandos para levantar todo
 
-```graphql
-query {
-  book(id: 1) {
-    title
-    genre
-    year
-    available
-  }
-}
-```
+\`\`\`bash
+# 1. Iniciar Minikube
+minikube start --driver=docker --cpus=4 --memory=4096
 
-### Filtrar estudiantes por carrera
+# 2. Instalar Traefik
+helm repo add traefik https://helm.traefik.io/traefik
+helm repo update
+kubectl create namespace traefik
+helm install traefik traefik/traefik \
+  --namespace traefik \
+  --set service.type=LoadBalancer \
+  --set providers.kubernetesCRD.allowCrossNamespace=true
 
-```graphql
-query {
-  studentsByCareer(career: "Ingeniería en Sistemas") {
-    name
-    semester
-    gpa
-    scholarship
-  }
-}
-```
+# 3. Instalar ArgoCD
+kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
-### Crear un nuevo libro
+# 4. Construir imágenes Docker
+minikube docker-env | Invoke-Expression
+docker build -t todo-frontend:latest .
+docker build -t todo-backend:latest -f apps/backend/Dockerfile .
 
-```graphql
-mutation {
-  createBook(
-    title: "Nuevo Libro"
-    author: "Autor Ejemplo"
-    genre: "Ficción"
-    year: 2024
-    pages: 320
-    rating: 4.2
-    available: true
-    isbn: "978-0-00-000000-0"
-    language: "Español"
-  ) {
-    id
-    title
-  }
-}
-```
+# 5. Aplicar manifiestos
+kubectl apply -f k8s/app/namespace.yaml
+kubectl apply -f k8s/app/backend-deployment.yaml
+kubectl apply -f k8s/app/frontend-deployment.yaml
+kubectl apply -f k8s/app/ingressroute.yaml
+kubectl apply -f k8s/argocd/ingressroute.yaml
 
-### Probar con curl
+# 6. Configurar ArgoCD en modo inseguro
+kubectl patch deployment argocd-server -n argocd --patch-file patch-argo.yaml
 
-```bash
-curl -X POST https://mi-app-cdn.onrender.com/graphql \
-  -H "Content-Type: application/json" \
-  -d '{"query":"{ books { title author rating } }"}'
-```
+# 7. Exponer Traefik
+minikube tunnel
 
----
+# 8. Configurar DNS local (/etc/hosts)
+# Agregar como administrador:
+# 127.0.0.1 app.douglas-yasser.com
+# 127.0.0.1 api.douglas-yasser.com
+# 127.0.0.1 argo.douglas-yasser.com
+\`\`\`
 
-## 🚀 Ejecutar Localmente
+##  Credenciales ArgoCD
 
-```bash
-# Clonar el repositorio
-git clone https://github.com/douglas-yasser/mi-app-cdn.git
-cd mi-app-cdn
-
-# Cambiar a la rama de esta actividad
-git checkout assignment-06
-
-# Instalar dependencias
-npm install
-
-# Iniciar el servidor
-node index.js
-```
-
-El servidor levanta en `http://localhost:4000/graphql`
-
----
-
-## 🛠️ Stack Tecnológico
-
-- **Runtime:** Node.js 22.x
-- **Framework:** Express
-- **GraphQL:** graphql + graphql-http
-- **Base de datos:** sql.js (SQLite en memoria)
-- **Deploy:** Render (plan gratuito)
-
----
-
-## 📁 Estructura del Proyecto
-
-```
-├── index.js          # Servidor principal (GraphQL + DB + seed data)
-├── package.json      # Dependencias
-└── README.md         # Este archivo
-```
-
----
-
-## ℹ️ Notas Técnicas
-
-- La base de datos es **SQLite en memoria** — se inicializa con datos de prueba cada vez que el servidor arranca.
-- No requiere autenticación. Todos los endpoints son públicos.
-- Los campos marcados con `!` en GraphQL son **non-nullable** (siempre retornan un valor).
-- La ventaja de GraphQL frente a REST es que el cliente decide exactamente qué campos recibe, evitando over-fetching y under-fetching.
+- **Usuario:** admin
+- **Contraseña:** obtener con:
+\`\`\`bash
+kubectl get secret argocd-initial-admin-secret -n argocd \
+  -o jsonpath="{.data.password}" | base64 -d
+\`\`\`
+"@ | Out-File -FilePath "README.md" -Encoding utf8

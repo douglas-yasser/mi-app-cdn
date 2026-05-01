@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: traefik
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: traefik
+  namespace: traefik
+spec:
+  repo: https://helm.traefik.io/traefik
+  chart: traefik
+  version: "26.0.0"
+  targetNamespace: traefik
+  valuesContent: |-
+    ports:
+      web:
+        nodePort: 30080
+    service:
+      type: NodePort
+    logs:
+      general:
+        level: INFO

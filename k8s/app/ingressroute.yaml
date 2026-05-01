@@ -1,0 +1,29 @@
+﻿apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: todo-frontend-route
+  namespace: todo-app
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: "Host(`app.douglas-yasser.com`)"
+    kind: Rule
+    services:
+    - name: todo-frontend
+      port: 80
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: todo-backend-route
+  namespace: todo-app
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: "Host(`api.douglas-yasser.com`)"
+    kind: Rule
+    services:
+    - name: todo-backend
+      port: 3001
